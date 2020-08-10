@@ -12,18 +12,18 @@ This is an experiment.
 
 ## Download
 
-* [windows-amd64]()
-* [darwin-amd64]()
-* [linux-amd64]()
+Prebuilt binaries are available [here](https://github.com/siadat/interface-type-check/releases/tag/v0.0.0):
+
+* [interface-type-check.darwin-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.darwin-amd64.tar.gz)
+* [interface-type-check.linux-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.linux-amd64.tar.gz)
+* [interface-type-check.windows-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.windows-amd64.tar.gz)
 
 ## Build
 
 ```bash
-go get -d github.com/siadat/interface-type-check
+git clone https://github.com/siadat/interface-type-check
 cd interface-type-check
-
-cd ./go/src && ./all.bash
-GOROOT=./go ./go/bin/go install .
+make test build
 ```
 
 ## How
@@ -31,33 +31,35 @@ GOROOT=./go ./go/bin/go install .
 Without a type list / type constrain:
 
 ```go
-/*  1     */  package main
-/*  2     */
-/*  3     */  type Numeric interface{}
-/*  4     */  
-/*  5     */  func main() {
-/*  6     */  	var n1 Numeric = 5
-/*  7     */  	var n2 Numeric = "bad value"
-/*  8     */  	_ = n1
-/*  9     */  	_ = n2
-/* 10     */  }
+/*     */  package main
+/*     */
+/*     */  type Numeric interface{}
+/*     */  
+/*     */  func main() {
+/*     */  	var n Numeric
+/* OK  */  	n = 3
+/* OK  */  	n = 3.14
+/* OK  */  	n = "bad type"
+/*     */  	_ = n
+/*     */  }
 ```
 
 With a type list / type constraint (L4):
 
 ```go
-/*  1     */  package main
-/*  2     */
-/*  3     */  type Numeric interface{
-/*  4 --> */  	// #type int, float64
-/*  5     */  }
-/*  6     */  
-/*  7     */  func main() {
-/*  8 OK  */  	var n1 Numeric = 5
-/*  9 ERR */  	var n2 Numeric = "bad value"
-/* 10     */  	_ = n1
-/* 11     */  	_ = n2
-/* 12     */  }
+/*     */  package main
+/*     */
+/*     */  type Numeric interface{
+/* ==> */  	// #type int, float64
+/*     */  }
+/*     */  
+/*     */  func main() {
+/*     */  	var n Numeric
+/* OK  */  	n = 3
+/* OK  */  	n = 3.14
+/* ERR */  	n = "bad type"
+/*     */  	_ = n
+/*     */  }
 ```
 
 Now perform a check to get the error:
@@ -79,27 +81,27 @@ type Numeric interface{
 
 The following checks are performed:
 
-- asign a value of an unlisted type
-  ```go
+### asign a value of an unlisted type
+```go
 var number Numeric = "abc" // CHECK ERR: expected int or float
-  ```
-- assert to an unlisted type
-  ```go
+```
+### assert to an unlisted type
+```go
 _, _ = number.(string) // CHECK ERR: string not allowed
-  ```
-- include an unlisted type in a type switch
-  ```go
+```
+### include an unlisted type in a type switch
+```go
 switch number.(type) {
 case string: // CHECK ERR: string not allowed
 case float:
 }
-  ```
-- neglect a type in a type switch
-  ```go
+```
+### neglect a type in a type switch
+```go
 switch number.(type) { // CHECK ERR: missing case for int
 case float:
 }
-  ```
+```
 
 
 <!--
@@ -130,17 +132,8 @@ type Token interface{}
 Adding the #type comment, it would look like this:
 
 ```go
-// A Token holds a value of one of these types:
-//
-//	Delim, for the four JSON delimiters [ ] { }
-//	bool, for JSON booleans
-//	float64, for JSON numbers
-//	Number, for JSON numbers
-//	string, for JSON string literals
-//	nil, for JSON null
-//
 type Token interface {
-	// #type Delim, bool, float64, Number, string, nil
+	// #type Delim, bool, float64, Number, string
 }
 ```
 
@@ -180,7 +173,7 @@ type Scanner interface {
 }
 
 type SourceType interface {
-	// #type int64, float64, bool, []byte, string, time.Time, nil
+	// #type int64, float64, bool, []byte, string, time.Time
 }
 ```
 
