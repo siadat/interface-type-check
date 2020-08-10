@@ -28,7 +28,7 @@ make test build
 
 ## Demo
 
-Without a type checking:
+Without type checking:
 
 ```go
 /*     */  package main
@@ -81,27 +81,22 @@ type Numeric interface{
 
 The following checks are performed:
 
-### asign a value of an unlisted type
 ```go
 var number Numeric = "abc" // CHECK ERR: expected int or float
-```
-### assert to an unlisted type
-```go
+
 _, _ = number.(string) // CHECK ERR: string not allowed
-```
-### include an unlisted type in a type switch
-```go
+
 switch number.(type) {
 case string: // CHECK ERR: string not allowed
 case float:
 }
-```
-### neglect a type in a type switch
-```go
+
 switch number.(type) { // CHECK ERR: missing case for int
 case float:
 }
 ```
+
+[more examples](https://github.com/siadat/go/blob/interface-type-check/src/go/types/examples/sum.go2)
 
 
 <!--
