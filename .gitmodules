@@ -1,0 +1,4 @@
+[submodule "_go"]
+	path = _go
+	url = https://github.com/siadat/go.git
+	branch = interface-type-check
