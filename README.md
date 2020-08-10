@@ -26,9 +26,9 @@ cd interface-type-check
 make test build
 ```
 
-## How
+## Demo
 
-Without a type list / type constrain:
+Without a type checking:
 
 ```go
 /*     */  package main
@@ -44,13 +44,13 @@ Without a type list / type constrain:
 /*     */  }
 ```
 
-With a type list / type constraint (L4):
+With type checking:
 
 ```go
 /*     */  package main
 /*     */
 /*     */  type Numeric interface{
-/* ==> */  	// #type int, float64
+/* --> */  	// #type int, float64
 /*     */  }
 /*     */  
 /*     */  func main() {
@@ -111,7 +111,7 @@ case float:
 ### xml.Token
 -->
 
-## Example (json.Token)
+## Experiment: json.Token
 
 All supported types of [encoding/json.Token](https://pkg.go.dev/encoding/json?tab=doc#Token) are known,
 as documented here:
@@ -139,7 +139,7 @@ type Token interface {
 
 That's all we need to be able to use the checker.
 
-## Example (sql.Scanner)
+## Experiment: sql.Scanner
 
 [database/sql.Scanner](https://pkg.go.dev/database/sql?tab=doc#Scanner) is also defined as an empty interface whose possible types are known.
 
@@ -177,30 +177,9 @@ type SourceType interface {
 }
 ```
 
-## Example (Connection type)
 
-The Connecting type has a retry field:
-
-```go
-type Connected    struct{}
-type Disconnected struct{}
-type Connecting   struct{ rety int }
-
-type Connection interface {
-	// #type Connected, Disconnected, Connecting
-}
-
-func log(conn Connection) int {
-	switch c := conn.(type) {
-	case Connected:    fmt.Println("Connected")
-	case Disconnected: fmt.Println("Disconnected")
-	case Connecting:   fmt.Println("Connecting, retry:", c.retry)
-	case nil:          panic("conn is nil")
-	}
-}
-```
-
-## Example (error)
+<!--
+## Experiment: error handling
 
 ```go
 type RequestOrError interface {
@@ -215,9 +194,10 @@ func H(re RequestOrError) {
 	}
 }
 ```
+-->
 
 
-## Example (net.IP)
+## Experiment: net.IP
 
 The standard library defines one [net.IP](https://pkg.go.dev/net#IP) type for both IPv4 and IPv6 IPs:
 
@@ -251,6 +231,29 @@ func version(ip IP) int {
 	case IPv4: return 4
 	case IPv6: return 6
 	case nil:  panic("ip is nil")
+	}
+}
+```
+
+## Experiment: connection type
+
+The Connecting type has a retry field:
+
+```go
+type Connected    struct{}
+type Disconnected struct{}
+type Connecting   struct{ rety int }
+
+type Connection interface {
+	// #type Connected, Disconnected, Connecting
+}
+
+func log(conn Connection) int {
+	switch c := conn.(type) {
+	case Connected:    fmt.Println("Connected")
+	case Disconnected: fmt.Println("Disconnected")
+	case Connecting:   fmt.Println("Connecting, retry:", c.retry)
+	case nil:          panic("conn is nil")
 	}
 }
 ```
