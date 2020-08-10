@@ -321,7 +321,8 @@ You might think of this tool as an experiment to see whether a sum type would be
 
 ## Implementation
 
-This experiment is built on top of the dev.go2go branch and uses types.Sum.
+- This experiment is built on top of the dev.go2go branch and uses types.Sum. See [diff](https://github.com/siadat/go/commit/af8a19e4de0c689be9d898d7ca3b0b5fd51767cb).
+- A few more test examples are added to [types/examples](https://github.com/siadat/go/commit/af8a19e4de0c689be9d898d7ca3b0b5fd51767cb#diff-4204251ae72f5797f67f5f4393ab8c10).
 
 ## Limitations
 
