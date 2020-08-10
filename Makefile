@@ -1,19 +1,22 @@
 .PHONY: dependencies test build
 
-GOROOT = $(PWD)/_go
+GOFORK = $(PWD)/_go
+CHECKER = ./cmd/interface-type-check
 
 test: dependencies
-	GOROOT=$(GOROOT) $(GOROOT)/bin/go test -count=1 .
+	cd $(CHECKER) && GOROOT=$(GOFORK) $(GOFORK)/bin/go test -count=1 .
 
 build: dependencies
-	GOOS=darwin GOARCH=amd64 GOROOT=$(GOROOT) $(GOROOT)/bin/go build -o interface-type-check .
-	tar cvzf interface-type-check.darwin-amd64.tar.gz interface-type-check
-	rm interface-type-check
+	cd $(CHECKER) && GOOS=darwin GOARCH=amd64 GOROOT=$(GOFORK) $(GOFORK)/bin/go build -o interface-type-check .
+	tar cvzf interface-type-check.darwin-amd64.tar.gz $(CHECKER)/interface-type-check
+	rm $(CHECKER)/interface-type-check
 
-	GOOS=linux GOARCH=amd64 GOROOT=$(GOROOT) $(GOROOT)/bin/go build -o interface-type-check .
-	tar cvzf interface-type-check.linux-amd64.tar.gz interface-type-check
-	rm interface-type-check
+	cd $(CHECKER) && GOOS=linux GOARCH=amd64 GOROOT=$(GOFORK) $(GOFORK)/bin/go build -o interface-type-check .
+	tar cvzf interface-type-check.linux-amd64.tar.gz $(CHECKER)/interface-type-check
+	rm $(CHECKER)/interface-type-check
 
-dependencies:
-	git submodule add -b interface-type-check --depth 1 https://github.com/siadat/go.git _go
-	GOROOT=$(GOROOT) $(GOROOT)/bin/go get .
+dependencies: $(GOFORK)/bin/go
+	cd $(CHECKER) && GOROOT=$(GOFORK) $(GOFORK)/bin/go get .
+
+$(GOFORK)/bin/go:
+	cd $(GOFORK)/src && ./make.bash

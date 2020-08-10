@@ -63,8 +63,8 @@ With a type list / type constraint (L4):
 Now perform a check to get the error:
 
 ```bash
-$ sum-checker .
-testfile.go:10:6: cannot use "bad value" (constant of type string) as Numeric value in variable declaration: mismatching choice type (have string, want a type in interface{type int, float64})
+$ interface-type-check .
+testfile.go:10:6: cannot use "bad value" (constant of type string) as Numeric value in variable declaration: mismatching sum type (have string, want a type in interface{type int, float64})
 ```
 
 ## Checks

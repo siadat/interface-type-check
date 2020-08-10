@@ -1,4 +1,4 @@
-module github.com/siadat/interface-type-check
+module github.com/siadat/interface-type-check/cmd/interface-type-check
 
 go 1.15
 
