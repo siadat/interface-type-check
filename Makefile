@@ -1,6 +1,6 @@
 .PHONY: dependencies test build
 
-GOFORK = $(PWD)/_go
+GOFORK = $(PWD)/go
 CHECKER = ./cmd/interface-type-check
 
 test: dependencies
