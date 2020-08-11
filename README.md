@@ -25,6 +25,16 @@ cd interface-type-check
 make test build
 ```
 
+## Contribute
+
+Do any of these:
+
+- Download or build from source
+- Report issues. You will most likely run into problems, because this is a new project
+- Use it! Let me know what you use it for
+- Search for TODOs in the code
+- Implement missing features
+
 ## Demo
 
 Without type checking:
@@ -38,7 +48,7 @@ Without type checking:
 /*    */  	var n Numeric
 /* OK */  	n = 3
 /* OK */  	n = 3.14
-/* OK */  	n = "bad type"
+/* OK */  	n = "abcd"
 /*    */  	_ = n
 /*    */  }
 ```
@@ -56,7 +66,7 @@ With type checking:
 /*     */  	var n Numeric
 /* OK  */  	n = 3
 /* OK  */  	n = 3.14
-/* ERR */  	n = "bad type"
+/* ERR */  	n = "abcd"
 /*     */  	_ = n
 /*     */  }
 ```
