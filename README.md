@@ -2,6 +2,7 @@
 
 This is an experiment.
 
+* For a simpler alternative, see [Go Groups](http://siadat.github.io/blog/post/go-group) and its optional companion [implement-group-type](http://github.com/siadat/implement-group-type).
 * This is a tool that performs a static type check on values of type interface{}.
 * Specify the types in a special comment, eg `// #type T1, T2`
 * Internally, the implementation is based on a new type in go2go's Sum type.
@@ -10,7 +11,7 @@ This is an experiment.
 
 ## Download
 
-Prebuilt binaries are available [here](https://github.com/siadat/interface-type-check/releases/tag/v0.0.0):
+Prebuilt binaries are available listed below as well as in the [release page](https://github.com/siadat/interface-type-check/releases/tag/v0.0.0).
 
 * [interface-type-check.darwin-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.darwin-amd64.tar.gz)
 * [interface-type-check.linux-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.linux-amd64.tar.gz)
