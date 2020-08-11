@@ -1,14 +1,12 @@
-# Static type checker for interface{}
+# Static type checker for interface{} with a type list
 
 This is an experiment.
 
-* I started this experiment because I was looking for a way to implement something like OCaml's variant or Rust's enum in a way that is idiomatic Go.
-* No code generation, works with Go 1 compiler.
-* You need to add a special comment, eg `// #type T1, T2`
-* It is a tool that performs a **static type check** on interface{} values.
-* Internally, the implementation is based on a new type in go2go's (the go2go/types.Sum type).
-  Go2go and this experiment have different concerns: go2go is about generic functions, this experiment is about sum types and sum variables.
-  There doesn't seem to be any incompatibilities.
+* This is a tool that performs a static type check on values of type interface{}.
+* Specify the types in a special comment, eg `// #type T1, T2`
+* Internally, the implementation is based on a new type in go2go's Sum type.
+  Go2go and this experiment have different concerns: go2go is about generic functions and type parameters,
+  this experiment is about sum types.
 
 ## Download
 
@@ -31,17 +29,17 @@ make test build
 Without type checking:
 
 ```go
-/*     */  package main
-/*     */
-/*     */  type Numeric interface{}
-/*     */  
-/*     */  func main() {
-/*     */  	var n Numeric
-/* OK  */  	n = 3
-/* OK  */  	n = 3.14
-/* OK  */  	n = "bad type"
-/*     */  	_ = n
-/*     */  }
+/*    */  package main
+/*    */
+/*    */  type Numeric interface{}
+/*    */  
+/*    */  func main() {
+/*    */  	var n Numeric
+/* OK */  	n = 3
+/* OK */  	n = 3.14
+/* OK */  	n = "bad type"
+/*    */  	_ = n
+/*    */  }
 ```
 
 With type checking:
@@ -62,7 +60,7 @@ With type checking:
 /*     */  }
 ```
 
-Now perform a check to get the error:
+Execute the checker to get the error:
 
 ```bash
 $ interface-type-check .
@@ -82,22 +80,25 @@ type Numeric interface{
 The following checks are performed:
 
 ```go
-var number Numeric = "abc" // CHECK ERR: expected int or float
+// CHECK ERR: expected int or float
+var number Numeric = "abc"
 
-_, _ = number.(string) // CHECK ERR: string not allowed
+// CHECK ERR: string not allowed
+_, _ = number.(string)
 
+// CHECK ERR: string not allowed
 switch number.(type) {
-case string: // CHECK ERR: string not allowed
+case string:
 case float:
 }
 
-switch number.(type) { // CHECK ERR: missing case for int
+// CHECK ERR: missing case for int
+switch number.(type) {
 case float:
 }
 ```
 
-[more examples](https://github.com/siadat/go/blob/interface-type-check/src/go/types/examples/sum.go2)
-
+More examples: fork/[src/types/examples/sum.go2](https://github.com/siadat/go/blob/interface-type-check/src/go/types/examples/sum.go2)
 
 <!--
 ### src/cmd/compile/internal/ssa/gen/rulegen.go Node and Statement
@@ -108,8 +109,8 @@ case float:
 
 ## Experiment: json.Token
 
-All supported types of [encoding/json.Token](https://pkg.go.dev/encoding/json?tab=doc#Token) are known,
-as documented here:
+All supported types of encoding/json.Token are known,
+as documented [here](https://pkg.go.dev/encoding/json?tab=doc#Token):
 
 ```go
 // A Token holds a value of one of these types:
@@ -136,7 +137,7 @@ That's all we need to be able to use the checker.
 
 ## Experiment: sql.Scanner
 
-[database/sql.Scanner](https://pkg.go.dev/database/sql?tab=doc#Scanner) is also defined as an empty interface whose possible types are known.
+database/sql.Scanner is also [defined](https://pkg.go.dev/database/sql?tab=doc#Scanner) as an empty interface whose possible types are known.
 
 Before:
 
@@ -263,7 +264,7 @@ There are two general use cases of an empty interface:
 1. supported types are unknown (eg json.Marshal)
 2. supported types are known (eg json.Token)
 
-### Don't use if...
+### Don't use if:
 
 You should not use this checker for 1.
 Sometimes we do not have prior knowledge about the expected types.
@@ -272,7 +273,7 @@ structs of any type. This function uses reflect to gather information
 it needs about the type of v.
 In this case, it is not possible to list all the supported types.
 
-### Use if...
+### Use if:
 
 You could consider using it, when all the types you support
 are known at the type of writing your code.
@@ -328,8 +329,3 @@ You might think of this tool as an experiment to see whether a sum type would be
   - allow nil values, but fail if type switch statements don't include nil (what we do in this checker).
   - track all initializations/assignments/etc of the interfaces with types and fail if they are nil.
   - change the zero-value of an interface with a type list to be the zero-value of its first type (or some type chosen by the programmer).
-
-## Discussion
-
-You feedback about this experiment is appreciated.
-Just ping me here or [@sinasiadat](https://twitter.com/sinasiadat) with a link to where you post it.
