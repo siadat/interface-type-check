@@ -25,18 +25,6 @@ cd interface-type-check
 make test build
 ```
 
-## Contribute
-
-Do any of these:
-
-- Download a binary, or build from source.
-- Report issues. You will most likely run into problems, because this is a new project.
-- Use it! Let me know what you use it for.
-- Search for TODOs in the code.
-- Implement missing features.
-
-<!-- https://github.com/golang/go/compare/dev.go2go...siadat:interface-type-check -->
-
 ## Demo
 
 Without type checking:
@@ -342,3 +330,16 @@ You might think of this tool as an experiment to see whether a sum type would be
   - allow nil values, but fail if type switch statements don't include nil (what we do in this checker).
   - track all initializations/assignments/etc of the interfaces with types and fail if they are nil.
   - change the zero-value of an interface with a type list to be the zero-value of its first type (or some type chosen by the programmer).
+
+## Contribute
+
+Do any of these:
+
+- Download a binary, or build from source.
+- Report issues. You will most likely run into problems, because this is a new project.
+- Use it! Let me know what you use it for.
+- Search for TODOs in the code.
+- Implement missing features.
+
+<!-- https://github.com/golang/go/compare/dev.go2go...siadat:interface-type-check -->
+
