@@ -29,11 +29,13 @@ make test build
 
 Do any of these:
 
-- Download or build from source
-- Report issues. You will most likely run into problems, because this is a new project
-- Use it! Let me know what you use it for
-- Search for TODOs in the code
-- Implement missing features
+- Download a binary, or build from source.
+- Report issues. You will most likely run into problems, because this is a new project.
+- Use it! Let me know what you use it for.
+- Search for TODOs in the code.
+- Implement missing features.
+
+<!-- https://github.com/golang/go/compare/dev.go2go...siadat:interface-type-check -->
 
 ## Demo
 
