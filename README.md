@@ -9,22 +9,6 @@ This is an experiment.
   Go2go and this experiment have different concerns: go2go is about generic functions and type parameters,
   this experiment is about sum types.
 
-## Download
-
-Prebuilt binaries are available listed below as well as in the [release page](https://github.com/siadat/interface-type-check/releases/tag/v0.0.0).
-
-* [interface-type-check.darwin-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.darwin-amd64.tar.gz)
-* [interface-type-check.linux-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.linux-amd64.tar.gz)
-* [interface-type-check.windows-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.windows-amd64.tar.gz)
-
-## Build
-
-```bash
-git clone https://github.com/siadat/interface-type-check
-cd interface-type-check
-make test build
-```
-
 ## Demo
 
 Without type checking:
@@ -330,6 +314,22 @@ You might think of this tool as an experiment to see whether a sum type would be
   - allow nil values, but fail if type switch statements don't include nil (what we do in this checker).
   - track all initializations/assignments/etc of the interfaces with types and fail if they are nil.
   - change the zero-value of an interface with a type list to be the zero-value of its first type (or some type chosen by the programmer).
+
+## Download
+
+Prebuilt binaries are available listed below as well as in the [release page](https://github.com/siadat/interface-type-check/releases/tag/v0.0.0).
+
+* [interface-type-check.darwin-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.darwin-amd64.tar.gz)
+* [interface-type-check.linux-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.linux-amd64.tar.gz)
+* [interface-type-check.windows-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.windows-amd64.tar.gz)
+
+## Build
+
+```bash
+git clone https://github.com/siadat/interface-type-check
+cd interface-type-check
+make test build
+```
 
 ## Contribute
 
