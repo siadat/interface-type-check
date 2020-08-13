@@ -3,11 +3,11 @@
 This is an experiment.
 
 * This is a tool that performs a static type check on values of type interface{}.
-* Specify the types in a special comment, eg `// #type T1, T2`
-* Internally, the implementation is based on a new type in go2go's Sum type.
+* You specify the types in a special comment, eg `// #type T1, T2`
+* Internally, the implementation is based on go2go's Sum type.
   Go2go and this experiment have different concerns: go2go is about generic functions and type parameters,
   this experiment is about sum types.
-* For a simpler alternative see [implement-group-interface](https://github.com/siadat/implement-group-interface).
+* For an alternative solution see [siadat/implement-group-interface](https://github.com/siadat/implement-group-interface).
 
 ## Demo
 
@@ -80,21 +80,33 @@ type Numeric interface{
 The following checks are performed:
 
 ```go
-// CHECK ERR: expected int or float
-var number Numeric = "abc"
+var number Numeric = "abc" // CHECK ERR: expected int or float
+```
 
-// CHECK ERR: string not allowed
-_, _ = number.(string)
 
-// CHECK ERR: string not allowed
+```go
+_, _ = number.(string)     // CHECK ERR: string not allowed
+```
+
+
+```go
 switch number.(type) {
-case string:
+case string:               // CHECK ERR: string not allowed
 case float:
 }
+```
 
-// CHECK ERR: missing case for int
-switch number.(type) {
+
+```go
+switch number.(type) {     // CHECK ERR: missing case for int
 case float:
+}
+```
+
+```go
+switch number.(type) {     // CHECK ERR: missing case for nil
+case float:
+case int:
 }
 ```
 
@@ -137,7 +149,8 @@ That's all we need to be able to use the checker.
 
 ## Experiment: sql.Scanner
 
-database/sql.Scanner is also [defined](https://pkg.go.dev/database/sql?tab=doc#Scanner) as an empty interface whose possible types are known.
+database/sql.Scanner is also [defined](https://pkg.go.dev/database/sql?tab=doc#Scanner)
+as an empty interface whose possible types are known.
 
 Before:
 
@@ -231,7 +244,7 @@ func version(ip IP) int {
 }
 ```
 
-## Experiment: connection type
+## Experiment: a hypothetical connection object
 
 The Connecting type has a retry field:
 
