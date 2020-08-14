@@ -7,7 +7,7 @@ This is an experiment.
 * Internally, the implementation is based on go2go's Sum type.
   Go2go and this experiment have different concerns: go2go is about generic functions and type parameters,
   this experiment is about sum types.
-* For an alternative solution see [siadat/implement-group-interface](https://github.com/siadat/implement-group-interface).
+* For an alternative solution see the [siadat/group-interface](https://github.com/siadat/group-interface) pattern.
 
 ## Demo
 
@@ -53,11 +53,11 @@ testfile.go:10:6: cannot use "bad value" (constant of type string) as Numeric va
 ```
 ## Download
 
-Prebuilt binaries are available listed below as well as in the [release page](https://github.com/siadat/interface-type-check/releases/tag/v0.0.0).
+Prebuilt binaries are available here as well as in the [release page](https://github.com/siadat/interface-type-check/releases/tag/v0.0.0).
 
-* [interface-type-check.darwin-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.darwin-amd64.tar.gz)
-* [interface-type-check.linux-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.linux-amd64.tar.gz)
-* [interface-type-check.windows-amd64.tar.gz](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.windows-amd64.tar.gz)
+* Darwin: [download](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.darwin-amd64.tar.gz) (2.9 MB)
+* Linux: [download](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.linux-amd64.tar.gz) (2.96 MB)
+* Windows: [download](https://github.com/siadat/interface-type-check/releases/download/v0.0.0/interface-type-check.windows-amd64.tar.gz) (3.01 MB)
 
 ## Build
 
